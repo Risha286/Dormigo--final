@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Services - Dormigo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color:#2196F3; /* blue background for Dormigo */
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid #388E3C;
+            position: relative; /* To position the location dropdown */
+        }
+
+        header h1 {
+            margin: 0;
+            color: #ffffff; /* White text for Dormigo branding */
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        header p {
+            margin: 5px 0 0 0;
+            color: #e0e0e0; /* Light grey text for the subheading */
+            font-size: 18px;
+        }
+
+        .logo {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            height: 50px; /* Adjust the height of the logo as needed */
+        }
+
+        .location-dropdown {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .location-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .service-card img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: #444;
+            margin: 10px 0 0 0;
+        }
+
+        .service-card h2 {
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+        }
+
+        .service-offer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffde59;
+            color: #d32f2f;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 15px;
+        }
+
+        .price-tag {
+            font-size: 14px;
+            color: #2196F3;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://example.com/dormigo-logo.png" alt="Dormigo Logo" class="logo">
+        <h1>Dormigo</h1>
+        <p>Services</p>
+        <div class="location-dropdown">
+            <select>
+                <option value="" disabled selected>Select Location</option>
+                <option value="chennai">Chennai</option>
+                <option value="coimbatore">Coimbatore</option>
+                <option value="madurai">Madurai</option>
+                <option value="tiruchirappalli">Tiruchirappalli</option>
+                <option value="salem">Salem</option>
+                <!-- Add more locations as needed -->
+            </select>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-offer">Up to 60% Off*</div>
+                <img src="house-cleaning.png" alt="Home Cleaning">
+                <h2>Home Cleaning</h2>
+                <p>Complete deep cleaning of your home.</p>
+                <div class="price-tag">Starts at ₹2999</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">Lowest Quote*</div>
+                <img src="packers and movers.png" alt="Packers & Movers">
+                <h2>Packers & Movers</h2>
+                <p>Relocation services at competitive rates.</p>
+                <div class="price-tag">Starts at ₹2100</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">Flat 25% Off</div>
+                <img src="paintings.png" alt="Painting">
+                <h2>Painting</h2>
+                <p>Professional wall painting services.</p>
+                <div class="price-tag">Flat 25% Off*</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">₹180/Service</div>
+                <img src="weekly cleaning.png" alt="Weekly Cleaning">
+                <h2>Weekly Cleaning</h2>
+                <p>Regular cleaning of your home.</p>
+                <div class="price-tag">₹180/Service</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">Up to 30% Off</div>
+                <img src="AC cleaning.png" alt="AC Service & Repair">
+                <h2>AC Service & Repair</h2>
+                <p>Efficient AC maintenance and repair.</p>
+                <div class="price-tag">Starts at ₹499</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">Up to 30% Off</div>
+                <img src="Sofa cleaning.png" alt="Sofa Cleaning">
+                <h2>Sofa Cleaning</h2>
+                <p>Deep cleaning of your sofas and upholstery.</p>
+                <div class="price-tag">Starts at ₹799</div>
+            </div>
+
+            <div class="service-card">
+                <img src="plumbing.png" alt="Plumbing">
+                <h2>Plumbing</h2>
+                <p>Expert plumbing services for all issues.</p>
+                <div class="price-tag">Starts at ₹150</div>
+            </div>
+
+            <div class="service-card">
+                <img src="electrian.png" alt="Electrician">
+                <h2>Electrician</h2>
+                <p>Reliable electrical services at your doorstep.</p>
+                <div class="price-tag">Starts at ₹150</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">Starts at ₹359</div>
+                <img src="bathroom-cleaning.png" alt="Bathroom Cleaning">
+                <h2>Bathroom Cleaning</h2>
+                <p>Deep cleaning of your bathrooms.</p>
+                <div class="price-tag">Starts at ₹359</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-offer">Flat 25% Off</div>
+                <img src="one-wall.png" alt="One Wall Painting">
+                <h2>One Wall Painting</h2>
+                <p>Accent wall painting service.</p>
+                <div class="price-tag">Flat 25% Off*</div>
+            </div>
+
+            <div class="service-card">
+                <img src="carpentary-5.jpg" alt="Carpentry">
+                <h2>Carpentry</h2>
+                <p>Skilled carpentry services for all needs.</p>
+                <div class="price-tag">Starts at ₹150</div>
+            </div>
+
+            <div class="service-card">
+                <img src="Vehicle Shifting -2.png" alt="Vehicle Shifting">
+                <h2>Vehicle Shifting</h2>
+                <p>Safe and secure vehicle relocation services.</p>
+                <div class="price-tag">Starts at ₹1000</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

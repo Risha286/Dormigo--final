@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Notifications</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f4f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      margin-top: 80px;
+      max-width: 600px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .notification-item {
+      padding: 15px;
+      margin-bottom: 10px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .notification-title {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .notification-time {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .mark-read-btn {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      border-radius: 5px;
+      background-color: #28a745; /* Green color */
+      color: white; /* White text color */
+    }
+
+    .mark-read-btn:disabled {
+      background-color: #6c757d; /* Darker gray when disabled */
+      color: white; /* Keep text white when disabled */
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #777;
+    }
+
+    .read {
+      background-color: #e9ecef; /* Light gray background for read notifications */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Notifications</h1>
+    </div>
+
+    <div class="notification-item" id="notification1">
+      <div class="notification-title">New Booking Request</div>
+      <div class="notification-time">2 hours ago</div>
+      <button class="btn btn-sm mark-read-btn" onclick="markAsRead('notification1')">Mark as Read</button>
+    </div>
+
+    <div class="notification-item" id="notification2">
+      <div class="notification-title">Maintenance Request for Property 2</div>
+      <div class="notification-time">1 day ago</div>
+      <button class="btn btn-sm mark-read-btn" onclick="markAsRead('notification2')">Mark as Read</button>
+    </div>
+
+    <div class="notification-item" id="notification3">
+      <div class="notification-title">Property 3 Lease Ending Soon</div>
+      <div class="notification-time">3 days ago</div>
+      <button class="btn btn-sm mark-read-btn" onclick="markAsRead('notification3')">Mark as Read</button>
+    </div>
+
+    <div class="notification-item" id="notification4">
+      <div class="notification-title">New Review Received for Property 1</div>
+      <div class="notification-time">5 days ago</div>
+      <button class="btn btn-sm mark-read-btn" onclick="markAsRead('notification4')">Mark as Read</button>
+    </div>
+
+    <div class="notification-item" id="notification5">
+      <div class="notification-title">Payment Reminder for Property 2</div>
+      <div class="notification-time">1 week ago</div>
+      <button class="btn btn-sm mark-read-btn" onclick="markAsRead('notification5')">Mark as Read</button>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2024 Dormigo. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function markAsRead(notificationId) {
+      const notificationElement = document.getElementById(notificationId);
+      notificationElement.classList.add('read');
+      notificationElement.querySelector('.mark-read-btn').disabled = true; // Disable the button after marking as read
+      notificationElement.querySelector('.mark-read-btn').innerText = 'Read'; // Change button text
+    }
+  </script>
+</body>
+</html>

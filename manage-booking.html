@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manage Bookings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 80px;
+        }
+
+        .booking-card {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 15px;
+        }
+
+        .booking-title {
+            font-size: 1.25rem;
+            color: #2c3e50;
+        }
+
+        .booking-details {
+            color: #7f8c8d;
+        }
+
+        .btn-approve, .btn-cancel {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center">Manage Bookings</h1>
+        
+        <div class="row">
+            <!-- Booking 1 -->
+            <div class="col-md-12">
+                <div class="booking-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="booking-title">John Doe</h5>
+                            <p class="booking-details">Property: Luxury Apartment</p>
+                            <p class="booking-details">Booking Date: September 24, 2024</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-success btn-approve">Approve</button>
+                            <button class="btn btn-danger btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Booking 2 -->
+            <div class="col-md-12">
+                <div class="booking-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="booking-title">Alice Smith</h5>
+                            <p class="booking-details">Property: Cozy Hostel Room</p>
+                            <p class="booking-details">Booking Date: September 22, 2024</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-success btn-approve">Approve</button>
+                            <button class="btn btn-danger btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Booking 3 -->
+            <div class="col-md-12">
+                <div class="booking-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="booking-title">Bob Johnson</h5>
+                            <p class="booking-details">Property: Stylish Flat</p>
+                            <p class="booking-details">Booking Date: September 20, 2024</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-success btn-approve">Approve</button>
+                            <button class="btn btn-danger btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more bookings as needed -->
+        </div>
+        
+        <div class="footer">
+            <p class="text-center">&copy; 2024 Dormigo. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

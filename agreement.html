@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormigo Rental Agreement</title>
+    <link rel="stylesheet" href="agreement.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Dormigo Rental Agreement</h1>
+    <form id="rental-agreement-form">
+        <div class="input-container">
+            <label for="owner-name">Owner's Name</label>
+            <input type="text" id="owner-name" placeholder="Enter Owner's Name" required>
+        </div>
+
+        <div class="input-container">
+            <label for="tenant-name">Tenant's Name</label>
+            <input type="text" id="tenant-name" placeholder="Enter Tenant's Name" required>
+        </div>
+
+        <div class="input-container">
+            <label for="property-address">Property Address</label>
+            <input type="text" id="property-address" placeholder="Enter Property Address" required>
+        </div>
+
+        <div class="input-container">
+            <label for="rent-amount">Rent Amount (₹)</label>
+            <input type="number" id="rent-amount" placeholder="Enter Rent Amount" required min="1">
+        </div>
+
+        <div class="input-container">
+            <label for="duration">Duration (months)</label>
+            <input type="number" id="duration" placeholder="Enter Duration in Months" required min="1">
+        </div>
+
+        <div class="input-container">
+            <label for="payment-date">Payment Date</label>
+            <input type="date" id="payment-date" required>
+        </div>
+
+        <div class="input-container">
+            <label for="owner-signature">Upload Owner's Signature (JPG/JPEG)</label>
+            <input type="file" id="owner-signature" accept=".jpg, .jpeg" required>
+        </div>
+
+        <div class="input-container">
+            <label for="tenant-signature">Upload Tenant's Signature (JPG/JPEG)</label>
+            <input type="file" id="tenant-signature" accept=".jpg, .jpeg" required>
+        </div>
+
+        <button type="button" onclick="generateAgreement()">Generate Agreement</button>
+    </form>
+
+    <div id="success-message" class="success-message" style="display:none;">
+        <h2>Agreement Generated Successfully!</h2>
+        <button id="download-agreement" onclick="downloadAgreement()" style="display:none;">Download Agreement</button>
+    </div>
+</div>
+
+<script src="agreement.js"></script>
+</body>
+</html>

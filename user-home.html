@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dormigo - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f7;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        /* Header Styling */
+        .header {
+            background-color: #3498db;
+            padding: 10px 20px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header .logo {
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar li {
+            margin-left: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #f39c12;
+            border-radius: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1506729623308-407f24e8e24b?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #e67e22;
+            border: none;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #d35400;
+        }
+
+        /* Options Section */
+        .options-container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .option-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            margin: 0 15px;
+            padding: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .option-card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .option-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .option-card p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+        }
+
+        .option-card .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .option-card .btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Why Choose Us Section */
+        .why-choose-us {
+            background-color: #ecf0f1;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .why-choose-us h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .why-choose-us .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .about-us h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .about-us p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* Chatbot Button */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .chatbot:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-icon {
+            font-size: 25px;
+            background: url('https://cdn-icons-png.flaticon.com/512/2271/2271068.png') no-repeat center;
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header with Navigation -->
+    <div class="header">
+        <a href="#" class="logo">Dormigo</a>
+        <ul class="navbar">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#why-choose-us">Why Choose Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Welcome to Dormigo</h1>
+            <p>Where Every Stay Feels Like Home</p>
+            <button class="cta-button">Find Your Space</button>
+        </div>
+    </section>
+
+    <!-- Options Section -->
+    <div class="options-container">
+        <!-- Bookings Card -->
+        <div class="option-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/167/167707.png" alt="Bookings Icon">
+            <h4>Bookings</h4>
+            <p>Browse accommodations like PGs, flats, and hotels.</p>
+            <button class="btn" onclick="location.href='booking.html'">Go</button>
+        </div>
+
+        <!-- Services Card -->
+        <div class="option-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1164/1164954.png" alt="Services Icon">
+            <h4>Services</h4>
+            <p>Access services like Packers & Movers, Maintenance, etc.</p>
+            <button class="btn" onclick="location.href='services.html'">Go</button>
+        </div>
+
+        <!-- Payments Card -->
+        <div class="option-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2916/2916122.png" alt="Payments Icon">
+            <h4>Make Payment</h4>
+            <p>Seamless payment options for hassle-free transactions.</p>
+            <button class="btn" onclick="location.href='payment.html'">Go</button>
+        </div>
+
+        <!-- Rental Agreement Card -->
+        <div class="option-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/483/483358.png" alt="Rental Agreement Icon">
+            <h4>Rental Agreement</h4>
+            <p>Download and manage your rental agreements easily.</p>
+            <button class="btn" onclick="location.href='agreement.html'">Go</button>
+        </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div class="why-choose-us" id="why-choose-us">
+        <h2>Why Choose Us?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/709/709719.png" alt="Wide Range of Options">
+                <h4>Wide Range of Options</h4>
+                <p>We offer a diverse selection of accommodations to suit every need.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png" alt="Reliable Services">
+                <h4>Reliable Services</h4>
+                <p>Experience top-notch services with our trusted partners.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2646/2646476.png" alt="User-Friendly Interface">
+                <h4>User-Friendly Interface</h4>
+                <p>Navigate through our platform effortlessly for a smooth experience.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/167/167707.png" alt="Affordable Stays Icon">
+                <h4>Affordable Stays</h4>
+                <p>Find the best rooms at unbeatable prices.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Verified Listings Icon">
+                <h4>Verified Listings</h4>
+                <p>All properties are verified for quality and safety.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2830/2830254.png" alt="Easy Booking Icon">
+                <h4>Easy Booking</h4>
+                <p>Book a property with just a few clicks.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/1324/1324923.png" alt="Customer Support">
+                <h4>24/7 Customer Support</h4>
+                <p>Our team is here to assist you around the clock.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/1082/1082371.png" alt="Security">
+                <h4>Secure Payments</h4>
+                <p>Experience safe and secure payment methods.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/1642/1642174.png" alt="Feedback System">
+                <h4>Feedback System</h4>
+                <p>Your feedback helps us improve our services.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us Section -->
+    <div class="about-us" id="about-us">
+        <h2>About Us</h2>
+        <p>Dormigo is dedicated to simplifying your accommodation search, providing you with a variety of options ranging from shared PGs to luxurious flats and hotels. Our mission is to create a seamless experience for both renters and owners, ensuring trust and transparency throughout the process. With our innovative features and exceptional customer service, we strive to meet your every need and make your stay truly enjoyable.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Dormigo. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Chatbot Button -->
+    <div class="chatbot" onclick="openChatbot()">
+        <div class="chatbot-icon"></div>
+    </div>
+
+    <script>
+        function openChatbot() {
+            // Logic to open chatbot
+            alert('Chatbot opened!');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

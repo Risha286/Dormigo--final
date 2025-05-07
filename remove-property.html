@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Remove Property</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f4f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      margin-top: 80px;
+      max-width: 600px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .btn-danger {
+      width: 100%;
+      border-radius: 25px;
+    }
+
+    .confirmation-message {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 90%;
+      display: none;
+      margin: 20px 0;
+    }
+
+    .alert {
+      border-radius: 25px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Confirmation Message -->
+    <div id="confirmationMessage" class="alert alert-success confirmation-message" role="alert"></div>
+
+    <div class="header">
+      <h1>Remove Property</h1>
+    </div>
+
+    <div class="card">
+      <form id="removePropertyForm">
+        <div class="mb-3">
+          <label for="propertySelect" class="form-label">Select Property to Remove</label>
+          <select class="form-select" id="propertySelect" required>
+            <option value="" disabled selected>Select a property</option>
+            <!-- Properties will be populated here dynamically -->
+          </select>
+        </div>
+        <button type="submit" class="btn btn-danger">Remove Property</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2024 Dormigo. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Firebase App and Firebase Services -->
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Initialize Firebase (Make sure you include your Firebase config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCb0bcXjN63CuW8EqWNniQFp4puAlW_G44",
+      authDomain: "authentication-7fa36.firebaseapp.com",
+      projectId: "authentication-7fa36",
+      storageBucket: "authentication-7fa36.appspot.com",
+      messagingSenderId: "712186051340",
+      appId: "1:712186051340:web:561e0b491c395dee93e729"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Function to load properties into the select dropdown
+    function loadProperties() {
+      const propertySelect = document.getElementById('propertySelect');
+      db.collection('properties').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const option = document.createElement('option');
+          option.value = doc.id; // Use the document ID for removal
+          option.textContent = doc.data().name; // Display property name
+          propertySelect.appendChild(option);
+        });
+      }).catch((error) => {
+        console.error("Error fetching properties: ", error);
+      });
+    }
+
+    // Load properties on page load
+    loadProperties();
+
+    document.getElementById('removePropertyForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const propertyId = document.getElementById('propertySelect').value;
+
+      // Remove the selected property from Firestore
+      db.collection('properties').doc(propertyId).delete().then(() => {
+        document.getElementById('confirmationMessage').innerText = 'Property removed successfully!';
+        document.getElementById('confirmationMessage').style.display = 'block';
+        setTimeout(function() {
+          document.getElementById('confirmationMessage').style.display = 'none';
+        }, 3000); // Hide message after 3 seconds
+        this.reset(); // Reset the form fields
+        // Reload properties to update the dropdown
+        loadProperties();
+      }).catch((error) => {
+        console.error("Error removing property: ", error);
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

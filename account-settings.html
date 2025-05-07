@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 80px;
+            max-width: 600px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-delete {
+            margin-left: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Account Settings</h1>
+
+    <form onsubmit="saveAccountChanges(event)">
+        <!-- Name -->
+        <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter your new password (leave blank to keep current)">
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Delete Account</button>
+        </div>
+    </form>
+</div>
+
+<!-- Delete Account Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your account? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="successMessage"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase App and Firebase Services (Auth & Firestore) -->
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+
+<script>
+    // Initialize Firebase (Make sure you include your Firebase config)
+    const firebaseConfig = {
+        apiKey: "AIzaSyCb0bcXjN63CuW8EqWNniQFp4puAlW_G44",
+        authDomain: "authentication-7fa36.firebaseapp.com",
+        projectId: "authentication-7fa36",
+        storageBucket: "authentication-7fa36.appspot.com",
+        messagingSenderId: "712186051340",
+        appId: "1:712186051340:web:561e0b491c395dee93e729"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function saveAccountChanges(event) {
+        event.preventDefault(); // Prevent the default form submission
+        const user = firebase.auth().currentUser; // Get the current user
+        const userId = user.uid; // Get the current user's UID
+
+        // Retrieve the input values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+
+        // Prepare an object for Firestore update
+        const updates = {
+            name: name,
+            email: email,
+            phoneNumber: phone,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp() // Update timestamp
+        };
+
+        // Update the user's document in Firestore
+        db.collection("owners").doc(userId).update(updates)
+            .then(() => {
+                console.log("User details updated successfully!");
+                showSuccessMessage("Changes saved successfully!");
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+                showSuccessMessage("Error saving changes: " + error.message);
+            });
+
+        // If password change is required, use Firebase Auth to update the password
+        if (password) {
+            user.updatePassword(password)
+                .then(() => {
+                    showSuccessMessage("Password updated successfully!");
+                })
+                .catch((error) => {
+                    console.error("Error updating password: ", error);
+                    showSuccessMessage("Error updating password: " + error.message);
+                });
+        }
+    }
+
+    function deleteAccount() {
+        const userId = firebase.auth().currentUser.uid; // Get the current user's UID
+
+        // Delete Firestore document
+        db.collection("owners").doc(userId).delete()
+            .then(() => {
+                console.log("Owner account deleted from Firestore.");
+                // Now delete the authentication account
+                return firebase.auth().currentUser.delete();
+            })
+            .then(() => {
+                showSuccessMessage("Account deleted successfully.");
+                // Redirect after the success message is dismissed
+                setTimeout(() => {
+                    window.location.href = 'login.html'; // Change this to your desired redirect URL
+                }, 2000); // Redirect after 2 seconds
+            })
+            .catch((error) => {
+                console.error("Error deleting account: ", error);
+                showSuccessMessage("Error deleting account: " + error.message);
+            });
+    }
+
+    function showSuccessMessage(message) {
+        document.getElementById('successMessage').innerText = message;
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

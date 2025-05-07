@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPay Style Payment Page</title>
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Payment Gateway</h1>
+
+    <!-- Tabbed Navigation -->
+    <div class="tabs">
+        <button class="tab-button active" onclick="openPaymentMethod('upi-qr')">UPI / QR</button>
+        <button class="tab-button" onclick="openPaymentMethod('card')">Credit / Debit Card</button>
+    </div>
+
+    <!-- UPI / QR Code Payment Method -->
+    <div id="upi-qr" class="tab-content">
+        <h2>Pay with UPI or QR Code</h2>
+
+        <!-- UPI ID Input -->
+        <div class="input-container">
+            <label for="upi-id">Enter UPI ID</label>
+            <input type="text" id="upi-id" placeholder="example@upi" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid UPI ID (e.g., example@upi)">
+        </div>
+
+        <!-- OR Separator -->
+        <div class="separator">
+            <span>--- OR ---</span>
+        </div>
+
+        <!-- QR Code Payment -->
+        <div class="qr-container">
+            <h2>Scan to Pay</h2>
+            <img src="qr-code logo.png" alt="QR Code" id="qr-code">
+        </div>
+
+        <!-- Amount Input -->
+        <div class="input-container">
+            <label for="upi-amount">Enter Amount (₹)</label>
+            <input type="number" id="upi-amount" placeholder="Enter Amount" required min="1">
+        </div>
+
+        <!-- Pay Button -->
+        <button id="pay-now" onclick="processTransaction('upi')">Pay Now</button>
+    </div>
+
+    <!-- Credit / Debit Card Payment Method -->
+    <div id="card" class="tab-content" style="display:none;">
+        <h2>Pay with Credit / Debit Card</h2>
+
+        <!-- Card Number Input -->
+        <div class="input-container">
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9876 5432" maxlength="19" required pattern="\d{4} \d{4} \d{4} \d{4}" title="Please enter a valid card number in the format: 1234 5678 9876 5432">
+        </div>
+
+        <!-- Expiration Date -->
+        <div class="input-container">
+            <label for="card-expiry">Expiry Date (MM/YY)</label>
+            <input type="month" id="card-expiry" required>
+        </div>
+
+        <!-- CVV Input -->
+        <div class="input-container">
+            <label for="card-cvv">CVV</label>
+            <input type="text" id="card-cvv" placeholder="CVV" maxlength="3" required pattern="\d{3}" title="Please enter a valid CVV (3 digits)">
+        </div>
+
+        <!-- Amount Input -->
+        <div class="input-container">
+            <label for="card-amount">Enter Amount (₹)</label>
+            <input type="number" id="card-amount" placeholder="Enter Amount" required min="1">
+        </div>
+
+        <!-- Pay Button -->
+        <button id="pay-card" onclick="processTransaction('card')">Pay Now</button>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" class="success-message" style="display:none;">
+        <h2>Transaction Successful!</h2>
+        <p>Thank you for your payment of ₹<span id="paid-amount"></span>.</p>
+        <button id="download-receipt" onclick="downloadReceipt()">Download E-Bill</button>
+    </div>
+</div>
+
+<script src="payment.js"></script>
+
+</body>
+</html>

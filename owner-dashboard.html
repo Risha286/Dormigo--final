@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Owner Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f4f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #3498db;
+      padding: 10px 20px;
+      color: white;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .header img {
+      width: 50px; /* Adjust the logo size */
+      height: auto;
+      margin-right: 15px;
+    }
+
+    .header nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .header nav a:hover {
+      color: #f0ad4e;
+    }
+
+    .container {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .dashboard-option {
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .dashboard-option:hover {
+      transform: translateY(-5px);
+    }
+
+    .dashboard-option h2 {
+      color: #2c3e50;
+    }
+
+    .dashboard-option p {
+      color: #7f8c8d;
+    }
+
+    .dashboard-option i {
+      font-size: 40px;
+      color: #3498db;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .row {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div style="display: flex; align-items: center;">
+      <img src="logo.png" alt="Dormigo Logo"> <!-- Replace 'logo.png' with your actual logo path -->
+      <h1>Dormigo</h1>
+    </div>
+    <nav>
+      <a href="user-home.html">Home</a>
+      <a href="logout.html">Logout</a>
+    </nav>
+  </div>
+
+  <div class="container">
+    <h2>Owner's Dashboard</h2>
+    <p>Select an option to proceed</p>
+    
+    <div class="row">
+      <!-- Add Property Option -->
+      <div class="col-md-4">
+        <a href="add-property.html">
+          <div class="dashboard-option">
+            <i class="bi bi-building"></i>
+            <h2>Add Property</h2>
+            <p>Add new properties to your list</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Remove Property Option -->
+      <div class="col-md-4">
+        <a href="remove-property.html">
+          <div class="dashboard-option">
+            <i class="bi bi-trash"></i>
+            <h2>Remove Property</h2>
+            <p>Remove properties from your list</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Notifications Option -->
+      <div class="col-md-4">
+        <a href="owners-notification.html">
+          <div class="dashboard-option">
+            <i class="bi bi-bell"></i>
+            <h2>Notifications</h2>
+            <p>View and manage notifications</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Additional Options -->
+    <div class="row">
+      <!-- View All Properties Option -->
+      <div class="col-md-4">
+        <a href="view-property.html">
+          <div class="dashboard-option">
+            <i class="bi bi-eye"></i>
+            <h2>View All Properties</h2>
+            <p>See all properties listed</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Manage Bookings Option -->
+      <div class="col-md-4">
+        <a href="manage-booking.html">
+          <div class="dashboard-option">
+            <i class="bi bi-file-earmark-check"></i>
+            <h2>Manage Bookings</h2>
+            <p>Check and manage bookings</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Account Settings Option -->
+      <div class="col-md-4">
+        <a href="account-settings.html">
+          <div class="dashboard-option">
+            <i class="bi bi-person-circle"></i>
+            <h2>Account Settings</h2>
+            <p>Update your account information</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</body>
+</html>

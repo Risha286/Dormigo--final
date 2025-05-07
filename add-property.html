@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Property</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 80px;
+            max-width: 600px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            width: 100%;
+            border-radius: 25px;
+        }
+        .confirmation-message {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            display: none;
+            margin: 20px 0;
+        }
+        .alert {
+            border-radius: 25px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="confirmationMessage" class="alert alert-success confirmation-message" role="alert"></div>
+    <div class="header">
+        <h1>Add Property</h1>
+    </div>
+    <div class="card">
+        <form id="addPropertyForm">
+            <div class="mb-3">
+                <label for="propertyName" class="form-label">Property Name</label>
+                <input type="text" class="form-control" id="propertyName" placeholder="Enter property name" required>
+            </div>
+            <div class="mb-3">
+                <label for="propertyLocation" class="form-label">Property Location</label>
+                <input type="text" class="form-control" id="propertyLocation" placeholder="Enter property location" required>
+            </div>
+            <div class="mb-3">
+                <label for="propertyPrice" class="form-label">Price per Month (in ₹)</label>
+                <input type="number" class="form-control" id="propertyPrice" placeholder="Enter price" required>
+            </div>
+            <div class="mb-3">
+                <label for="propertyImage" class="form-label">Upload Image</label>
+                <input type="file" class="form-control" id="propertyImage" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+                <label for="propertyType" class="form-label">Property Type</label>
+                <select class="form-select" id="propertyType" required>
+                    <option value="pg">PG</option>
+                    <option value="hostel">Hostel</option>
+                    <option value="flat">Flat</option>
+                    <option value="hotel">Hotel</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="propertyDetails" class="form-label">Additional Details</label>
+                <textarea class="form-control" id="propertyDetails" rows="3" placeholder="Enter additional details about the property"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Property</button>
+        </form>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Dormigo. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- Firebase App and Firebase Services -->
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // Initialize Firebase with your project configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCb0bcXjN63CuW8EqWNniQFp4puAlW_G44",
+      authDomain: "authentication-7fa36.firebaseapp.com",
+      projectId: "authentication-7fa36",
+      storageBucket: "authentication-7fa36.appspot.com",
+      messagingSenderId: "712186051340",
+      appId: "1:712186051340:web:561e0b491c395dee93e729"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    document.getElementById('addPropertyForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get the form data
+        const propertyName = document.getElementById('propertyName').value;
+        const propertyLocation = document.getElementById('propertyLocation').value;
+        const propertyPrice = document.getElementById('propertyPrice').value;
+        const propertyImage = document.getElementById('propertyImage').files[0];
+        const propertyType = document.getElementById('propertyType').value;
+        const propertyDetails = document.getElementById('propertyDetails').value;
+
+        // Upload the image to Firebase Storage
+        const storageRef = storage.ref('propertyImages/' + propertyImage.name);
+        storageRef.put(propertyImage).then((snapshot) => {
+            // Get the download URL of the uploaded image
+            return snapshot.ref.getDownloadURL();
+        }).then((downloadURL) => {
+            // Save the property details in Firestore
+            return db.collection('properties').add({
+                name: propertyName,
+                location: propertyLocation,
+                price: propertyPrice,
+                imageUrl: downloadURL,
+                type: propertyType,
+                details: propertyDetails,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        }).then(() => {
+            document.getElementById('confirmationMessage').innerText = 'Property added successfully!';
+            document.getElementById('confirmationMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('confirmationMessage').style.display = 'none';
+            }, 3000); // Hide message after 3 seconds
+            this.reset(); // Reset the form fields
+        }).catch((error) => {
+            console.error("Error adding property: ", error);
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

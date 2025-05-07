@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dormigo - Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .signup-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .signup-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .signup-form input, .signup-form select {
+      border-radius: 5px;
+    }
+
+    .signup-form button {
+      border-radius: 30px;
+      padding: 10px 25px;
+    }
+
+    .back-to-login {
+      margin-top: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .back-to-login a {
+      color: #f0ad4e;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body> 
+
+  <!-- Sign-Up Container -->
+  <div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="signup-container col-md-6">
+      <div class="signup-title">
+        <h1>Sign Up to Dormigo</h1>
+        <p>Create your account as a User or an Owner</p>
+      </div>
+
+      <form class="signup-form" id="signupForm">
+        <div class="mb-3">
+          <label for="signupName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="signupName" placeholder="Enter your full name" required>
+        </div>
+        <div class="mb-3">
+          <label for="signupEmail" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="signupMobile" class="form-label">Mobile Number</label>
+          <input type="text" class="form-control" id="signupMobile" placeholder="Enter your mobile number" required>
+        </div>
+        <div class="mb-3">
+          <label for="signupPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="signupPassword" placeholder="Create a password" required>
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+        </div>
+        <div class="mb-3">
+          <label for="signupRole" class="form-label">Select Role</label>
+          <select class="form-select" id="signupRole" required>
+            <option value="user">User</option>
+            <option value="owner">Owner</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-warning w-100">Sign Up</button>
+        <div class="back-to-login">
+          <p>Already have an account? <a href="login.html">Back to Login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase App and Firebase Services (Auth & Firestore) -->
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+  
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCb0bcXjN63CuW8EqWNniQFp4puAlW_G44",
+      authDomain: "authentication-7fa36.firebaseapp.com",
+      projectId: "authentication-7fa36",
+      storageBucket: "authentication-7fa36.appspot.com",
+      messagingSenderId: "712186051340",
+      appId: "1:712186051340:web:561e0b491c395dee93e729"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Signup form submission
+    document.getElementById('signupForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Get form values
+      const fullName = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const mobile = document.getElementById('signupMobile').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const role = document.getElementById('signupRole').value;
+
+      const messageDiv = document.getElementById('message');
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      // Create user with Firebase Auth
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const userId = userCredential.user.uid;
+
+          // Save user details in Firestore
+          return db.collection('users').doc(userId).set({
+            fullName: fullName,
+            email: email,
+            mobile: mobile,
+            role: role
+          });
+        })
+        .then(() => {
+          alert("Signup successful!");
+        })
+        .catch((error) => {
+          alert(`Error: ${error.message}`);
+        });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

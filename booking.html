@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormigo - Find Your Stay</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        header {
+            background-color: #0062cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #search-bar {
+            width: 60%;
+            padding: 12px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .filter-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .filter {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+        .filter select, .filter input {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        #more-filters {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            display: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+        }
+        .listings {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .listing {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .listing img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .listing h3, .listing p {
+            margin: 10px 0;
+        }
+        .listing button {
+            margin-top: auto;
+            padding: 10px;
+            background-color: #0062cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .listing button:hover {
+            background-color: #004bb5;
+        }
+        .map-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+        }
+        .apply-filters-btn {
+            background-color: #0062cc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .apply-filters-btn:hover {
+            background-color: #004bb5;
+        }
+        .more-filters-btn {
+            background-color: #007bff; /* Blue color for more filters button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .more-filters-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Dormigo - Find Your Stay</h1>
+        <input type="text" id="search-bar" placeholder="Search for PGs, Hostels, Hotels">
+    </header>
+
+    <div class="filter-container">
+        <select id="property-type" class="filter">
+            <option value="">Select Type</option>
+            <option value="PG">PG</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Hotel">Hotel</option>
+        </select>
+        
+        <select id="gender-filter" class="filter">
+            <option value="">Select Gender</option>
+            <option value="Boys">Boys</option>
+            <option value="Girls">Girls</option>
+            <option value="Unisex">Unisex</option>
+        </select>
+
+        <button class="more-filters-btn" onclick="toggleMoreFilters()">More Filters</button>
+    </div>
+
+    <div id="more-filters" class="filter-container">
+        <input type="number" id="min-price" class="filter" placeholder="Min Price" min="0">
+        <input type="number" id="max-price" class="filter" placeholder="Max Price" min="0">
+        <select id="rating-filter" class="filter">
+            <option value="">Select Rating</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
+        <select id="locality-filter" class="filter">
+            <option value="">Select Locality</option>
+            <option value="Koramangala">Koramangala</option>
+            <option value="Indiranagar">Indiranagar</option>
+            <option value="Jayanagar">Jayanagar</option>
+            <option value="Whitefield">Whitefield</option>
+        </select>
+        <button class="apply-filters-btn" onclick="filterListings()">Apply Filters</button>
+    </div>
+
+    <div class="container">
+        <div class="listings">
+            <div class="listing" data-type="PG" data-gender="Girls" data-price="3000" data-rating="4">
+                <img src="Starlight PG.jpeg" alt="PG for Girls">
+                <h3>Starlight PG for Girls</h3>
+                <p>Location: Koramangala</p>
+                <p>Price: ₹3000</p>
+                <p>Rating: 4 Stars</p>
+                <button onclick="showOnMap('Koramangala, Bangalore')">Book Now</button>
+            </div>
+
+            <div class="listing" data-type="Hostel" data-gender="Boys" data-price="1500" data-rating="3">
+                <img src="Sunrise PG.jpg" alt="Hostel for Boys">
+                <h3>Sunrise Hostel for Boys</h3>
+                <p>Location: Indiranagar</p>
+                <p>Price: ₹1500</p>
+                <p>Rating: 3 Stars</p>
+                <button onclick="showOnMap('Indiranagar, Bangalore')">Book Now</button>
+            </div>
+
+            <div class="listing" data-type="Hotel" data-gender="Unisex" data-price="5000" data-rating="5">
+                <img src="luke hotel.jpg" alt="The Luxe Hotel">
+                <h3>The Luxe Hotel</h3>
+                <p>Location: Whitefield</p>
+                <p>Price: ₹5000</p>
+                <p>Rating: 5 Stars</p>
+                <button onclick="showOnMap('Whitefield, Bangalore')">Book Now</button>
+            </div>
+
+            <div class="listing" data-type="PG" data-gender="Unisex" data-price="4500" data-rating="4">
+                <img src="GreenWood.jpg" alt="Greenwood PG">
+                <h3>Greenwood PG</h3>
+                <p>Location: Jayanagar</p>
+                <p>Price: ₹4500</p>
+                <p>Rating: 4 Stars</p>
+                <button onclick="showOnMap('Jayanagar, Bangalore')">Book Now</button>
+            </div>
+
+            <div class="listing" data-type="Hotel" data-gender="Unisex" data-price="7000" data-rating="5">
+                <img src="Grand Place Hotel.jpg" alt="Grand Palace Hotel">
+                <h3>Grand Palace Hotel</h3>
+                <p>Location: MG Road</p>
+                <p>Price: ₹7000</p>
+                <p>Rating: 5 Stars</p>
+                <button onclick="showOnMap('MG Road, Bangalore')">Book Now</button>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMoreFilters() {
+            const moreFilters = document.getElementById("more-filters");
+            if (moreFilters.style.display === "flex") {
+                moreFilters.style.display = "none";
+            } else {
+                moreFilters.style.display = "flex";
+            }
+        }
+
+        function filterListings() {
+            // Implement filtering logic here
+            alert("Filters applied!");
+        }
+
+        function showOnMap(location) {
+            // Implement map functionality here
+            alert("Showing location: " + location);
+        }
+
+        // Leaflet map initialization (you can customize this part)
+        const map = L.map('map').setView([12.9716, 77.5946], 13); // Centered on Bangalore
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Add a marker for demonstration (you can change this to dynamically add markers)
+        L.marker([12.9716, 77.5946]).addTo(map).bindPopup('Bangalore').openPopup();
+    </script>
+</body>
+</html>

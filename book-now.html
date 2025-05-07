@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormigo - Find Your Accommodation</title>
+    <link rel="stylesheet" href="booking.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .property-list {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .property {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            cursor: pointer;
+            width: 250px;
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: red;
+            float: right;
+            font-size: 28px;
+        }
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .section {
+            display: none;
+            padding: 20px;
+        }
+        .active {
+            display: block;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 10px 0;
+        }
+        ul li a {
+            text-decoration: none;
+            color: #4CAF50;
+            cursor: pointer;
+        }
+        ul li a:hover {
+            color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dormigo - Find Your Perfect Place</h1>
+    </header>
+
+    <!-- Property List -->
+    <div class="property-list">
+        <div class="property" onclick="openModal('Property 1', 'Location 1', '$500', '4.5/5')">
+            <h2>Property 1</h2>
+            <p>Location: Location 1</p>
+            <p>Price: $500</p>
+            <p>Rating: 4.5/5</p>
+        </div>
+        <!-- Add more properties here -->
+    </div>
+
+    <!-- Modal -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="property-name"></h2>
+            <p id="property-location"></p>
+            <p id="property-price"></p>
+            <p id="property-rating"></p>
+
+            <h3>Choose an Option:</h3>
+            <ul>
+                <li><a onclick="showSection('schedule-visit')">Schedule a Visit</a></li>
+                <li><a onclick="showSection('virtual-tour')">Take a Virtual Tour</a></li>
+                <li><a onclick="showSection('make-payment')">Make Payment</a></li>
+                <li><a onclick="showSection('rental-agreement')">View Rental Agreement</a></li>
+                <li><a onclick="showSection('discounts-offers')">Check Discounts and Offers</a></li>
+                <li><a onclick="showSection('amenities')">See Amenities</a></li>
+                <li><a onclick="showSection('room-descriptions')">More Room Descriptions</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sections -->
+    <div id="schedule-visit" class="section">
+        <h2>Schedule a Visit</h2>
+        <form>
+            <label for="visit-date">Choose Date:</label>
+            <input type="date" id="visit-date" name="visit-date">
+            <br><br>
+            <label for="visit-time">Choose Time:</label>
+            <input type="time" id="visit-time" name="visit-time">
+            <br><br>
+            <button type="submit">Schedule Visit</button>
+        </form>
+    </div>
+
+    <div id="virtual-tour" class="section">
+        <h2>Take a Virtual Tour</h2>
+        <button onclick="alert('Starting virtual tour...')">Start Virtual Tour</button>
+    </div>
+
+    <div id="make-payment" class="section">
+        <h2>Make Payment</h2>
+        <form>
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" name="card-number">
+            <br><br>
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" name="expiry-date">
+            <br><br>
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv">
+            <br><br>
+            <button type="submit">Pay Now</button>
+        </form>
+    </div>
+
+    <div id="rental-agreement" class="section">
+        <h2>View Rental Agreement</h2>
+        <iframe src="rental-agreement.pdf" width="100%" height="600px"></iframe>
+    </div>
+
+    <div id="discounts-offers" class="section">
+        <h2>Check Discounts and Offers</h2>
+        <ul>
+            <li>10% off for students</li>
+            <li>Free first month's rent on annual contracts</li>
+        </ul>
+    </div>
+
+    <div id="amenities" class="section">
+        <h2>Amenities</h2>
+        <ul>
+            <li>Gym</li>
+            <li>Swimming Pool</li>
+            <li>Parking</li>
+        </ul>
+    </div>
+
+    <div id="room-descriptions" class="section">
+        <h2>More Room Descriptions</h2>
+        <ul>
+            <li>Room 1: 2 Beds, Balcony, City View</li>
+            <li>Room 2: 1 Bed, Pool View</li>
+        </ul>
+    </div>
+
+    <!-- JavaScript to Handle Modal and Sections -->
+    <script>
+        function openModal(name, location, price, rating) {
+            document.getElementById('property-name').textContent = name;
+            document.getElementById('property-location').textContent = location;
+            document.getElementById('property-price').textContent = price;
+            document.getElementById('property-rating').textContent = rating;
+            document.getElementById('details-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('details-modal').style.display = 'none';
+        }
+
+        function showSection(sectionId) {
+            closeModal();
+            let sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
